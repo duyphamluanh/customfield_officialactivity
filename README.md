@@ -28,7 +28,6 @@ Set name and short name => Save Changes
 ![Screenshot from 2023-12-18 14-55-31](https://github.com/duyphamluanh/customfield_officialactivity/assets/32034702/7ef94233-ac07-43fb-bdb0-41c92dabfb44)
 
 # How it works?
-
 In the `course/modedit.php` file, you will find the following line of code at the end of the `standard_coursemodule_elements` function:
 ```php
 $this->plugin_extend_coursemodule_standard_elements();
