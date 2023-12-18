@@ -51,3 +51,15 @@ The plugin `modcustomfields` has a function named `local_modcustomfields_coursem
 In this plugin, We use the `idnumber` field to save information as an official activity. Therefore, if we change the `idnumber` of an official activity, we should also update the settings in the corresponding expired activity.
 
 Since we rely on the `idnumber`, even if the ID of an activity or the ID of the activity's course module changes during the restoration process, the settings will remain the same.
+
+# Get data with course module id  
+Using static method: `get_officialactivity_by_cmid($cmid, $fieldshortname = 'official_acitvity')`  
+Data return (sample):  
+```
+{
+    instanceid: "3083"
+    contextid: "3214"
+    value: "KTC1"
+}
+```  
+*instanceid is $cmid  

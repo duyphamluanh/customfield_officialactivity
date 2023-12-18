@@ -76,4 +76,26 @@ class field_controller extends \core_customfield\field_controller {
     public function parse_value(string $value) {
         return (int) array_search($value, $this->get_options());
     }
+
+     /**
+     * Static method get field data
+     *
+     * @param int $cmid
+     * @param string $fieldshortname
+     * @return int
+     */
+    public static function get_officialactivity_by_cmid($cmid, $fieldshortname = 'official_acitvity') {
+        global $DB;
+        $fieldtype = 'officialactivity';
+        $sql = 'SELECT cd.instanceid, cd.contextid, cd.value
+                FROM {customfield_data} as cd
+                JOIN {customfield_field} as cf ON cd.fieldid = cf.id
+                WHERE cf.shortname = :shortname AND cf.type = :fieldtype AND cd.instanceid = :instanceid';
+
+        return $DB->get_record_sql($sql, array(
+            'shortname' => $fieldshortname,
+            'fieldtype' => $fieldtype,
+            'instanceid' => $cmid
+        ) );
+    }
 }
