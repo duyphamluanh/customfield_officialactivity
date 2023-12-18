@@ -27,3 +27,28 @@ Set name and short name => Save Changes
   
 ![Screenshot from 2023-12-18 14-55-31](https://github.com/duyphamluanh/customfield_officialactivity/assets/32034702/7ef94233-ac07-43fb-bdb0-41c92dabfb44)
 
+# How it works?
+
+In the `course/modedit.php` file, you will find the following line of code at the end of the `standard_coursemodule_elements` function:
+```php
+$this->plugin_extend_coursemodule_standard_elements();
+```
+The plugin_extend_coursemodule_standard_elements function is defined as follows:
+```
+protected function plugin_extend_coursemodule_standard_elements() {
+    $callbacks = get_plugins_with_function('coursemodule_standard_elements', 'lib.php');
+    foreach ($callbacks as $type => $plugins) {
+        foreach ($plugins as $plugin => $pluginfunction) {
+            // We have exposed all the important properties with public getters - and the callback can manipulate the mform
+            // directly.
+            $pluginfunction($this, $this->_form);
+        }
+    }
+}
+```
+This function calls all the functions that end with 'coursemodule_standard_elements'.  
+The plugin `modcustomfields` has a function named `local_modcustomfields_coursemodule_standard_elements` that matches this pattern. Consequently, the form will be rendered at the end of the module settings form.
+
+In this plugin, We use the `idnumber` field to save information as an official activity. Therefore, if we change the `idnumber` of an official activity, we should also update the settings in the corresponding expired activity.
+
+Since we rely on the `idnumber`, even if the ID of an activity or the ID of the activity's course module changes during the restoration process, the settings will remain the same.
